@@ -20,3 +20,19 @@
 </div>
 
 <script src="/scripts/poll-chart.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  socket.on("connect", () => {
+    console.log("Socket.IO connected");
+  });
+  socket.on("voteUpdate", (updatedOption) => {
+    console.log(updatedOption);
+    const optionElement = document.querySelector(`#option-${updatedOption.id}`);
+    const voteCountElement = document.querySelector(`#vote-count-${updatedOption.id}`);
+
+    if (optionElement && voteCountElement) {
+      voteCountElement.querySelector("h1").textContent = `${updatedOption.no_votes} votes`;
+    }
+  });
+</script>
